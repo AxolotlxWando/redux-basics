@@ -1,42 +1,42 @@
-import { combineReducers } from 'redux';
-import { EnumActions, EnumVisibilityFilters } from './actions';
+import { combineReducers } from 'redux'
+import { EnumActions, EnumVisibilityFilters } from './actions'
 
-function visibilityFilter(state = EnumVisibilityFilters.SHOW_ALL, action) {
+function visibilityFilter (state = EnumVisibilityFilters.SHOW_ALL, action) {
   switch (action.type) {
     case EnumActions.SET_VISIBILITY_FILTER:
-      return action.filter;
+      return action.filter
     default:
-      return state;
+      return state
   }
 }
 
-function todos(state = [], action) {
-  switch (action.type){
+function todos (state = [], action) {
+  switch (action.type) {
     case EnumActions.ADD_TODO:
-      state = state.slice();
+      state = state.slice()
       state.push({
-          text: action.text,
-          completed: false
-      });
-      return state;
+        id: action.id,
+        text: action.text,
+        completed: false
+      })
+      return state
     case EnumActions.TOGGLE_TODO:
-      return state.map(function(todo, index) {
-          if (index === action.index) {
-            return Object.assign({}, todo, {
-              completed: !todo.completed
-            });
-          }
-          return todo;
-      });
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          return Object.assign({}, todo, {
+            completed: !todo.completed
+          })
+        }
+        return todo
+      })
     default:
-      return state;
+      return state
   }
 }
 
 const todoApp = combineReducers({
-    visibilityFilter: visibilityFilter,
-    todos: todos
-});
+  visibilityFilter: visibilityFilter,
+  todos: todos
+})
 
-export default todoApp;
-
+export default todoApp
